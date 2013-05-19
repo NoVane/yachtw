@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>Bootstrap, from Twitter</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="{{static_url("css/bootstrap.css")}}" rel="stylesheet">
+    <style type="text/css">
+      /* Override some defaults */
+      html, body {
+        background-color: #eee;
+      }
+      body {
+        padding-top: 40px; 
+      }
+      .container {
+        width: 300px;
+      }
+
+      /* The white background content wrapper */
+      .container > .content {
+        background-color: #fff;
+        padding: 20px;
+        margin: 0 -20px; 
+        -webkit-border-radius: 10px 10px 10px 10px;
+           -moz-border-radius: 10px 10px 10px 10px;
+                border-radius: 10px 10px 10px 10px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+                box-shadow: 0 1px 2px rgba(0,0,0,.15);
+      }
+
+    .login-form {
+    margin-left: 65px;
+    }
+  
+    legend {
+    margin-right: -50px;
+    font-weight: bold;
+      color: #404040;
+    }
+
+    </style>
+
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+      <div class="row">
+          <h2 style="background-color:#275698;text-align:center;color:#fefefe; box-shadow: 1px 1px 1px #999;">管理登录</h2>
+        <div class="login-form">
+
+          <form action="/login" method = "post">
+            <fieldset>
+              <div class="clearfix">
+                <input type="text" name="name" placeholder="用户名">
+              </div>
+              <div class="clearfix">
+                <input type="password" name="password" placeholder="密码">
+              </div>
+              {{ xsrf_form_html() }}
+              <button class="btn primary" type="submit">登录</button>
+              <span style="color:#CC0000">{{escape(error)}}</span>
+
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div> <!-- /container -->
+</body>
+</html>

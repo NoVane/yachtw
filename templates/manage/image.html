@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="zh-CN">
+    <title>
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <link href="{{static_url("css/bootstrap.css")}}" rel="stylesheet">
+    <style>
+      body { padding-top: 60px; /* 60px to make the container go all the way
+      to the bottom of the topbar */ }
+    </style>
+    <link href="{{static_url("css/bootstrap-responsive.css")}}" rel="stylesheet">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <div class="container-fluid">
+    	<div class="row-fluid">
+    		<!--/span-->
+    		<div class="span12">
+    				<ul class="nav nav-tabs">
+    					<li class="active">
+    						<a href="#">图片管理</a>
+    					</li>
+    					<li>
+    						<a href="#">新闻管理</a>
+    					</li>
+    					<li>
+    						<a href="#">联系管理</a>
+    					</li>
+    				</ul>
+        	    	<div class="well">
+                        
+                        <div>
+                            <div style="display:inline-block">
+                                <span> 图片描述: </span>
+                                <input id="new-image-desc" type="text" style="margin-right:10px;width:300px" />
+                            </div>
+                            <div style="display:inline-block">
+                                <span>图片地址:</span> 
+                                <input  id="new-image-url" type="text" style="margin-right:10px;width:400px" />
+                            </div>
+                            <a id="btn-new-image" class="btn" style="margin-top:-10px">新增</a>
+                        </div>
+                        <hr>
+        				<table class="table">
+                            <thead>
+                                <th>图片描述</th>
+                                <th>图片地址</th>
+                                <th>操作</th>
+                            </thead>    
+        					<tbody>
+                                {% for img in images %}
+        						<tr data-id="{{ img.get('iid', -1)  }}">
+        							<td>
+        								{{ escape(img.get('desc', '')) }}
+        							</td>
+        							<td class="">
+        								<a href="{{ escape(img.get('url', '')) }}" class="preview">{{ escape(img.get('url', '')) }}</a>
+        							</td>
+        							<td class="">
+                                        <button class="btn btn-mini btn-info" type="button">修改</button>
+                                        <button class="btn btn-mini btn-danger" type="button">删除</button>
+        							</td>
+        						</tr>
+                                {% end %}
+        					</tbody>
+        				</table>
+    			</div>
+    			<!--/span-->
+    		</div>
+    	</div>
+    	<!--/row-->
+    	
+    	<footer>
+    		
+    	</footer>
+    </div>
+    <!--/.fluid-container-->
+
+    <style>
+      
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+      
+      @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+      
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+    </script>
+    <script src="{{static_url("js/bootstrap.js")}}">
+    </script>
+    <script src="{{static_url("js/preview.js")}}">
+    </script>
+    <script>
+        function getCookie(c_name)
+        {
+            if (document.cookie.length>0)
+            {
+                c_start=document.cookie.indexOf(c_name + "=")
+                if (c_start!=-1)
+                { 
+                    c_start=c_start + c_name.length+1 
+                    c_end=document.cookie.indexOf(";",c_start)
+                    if (c_end==-1) c_end=document.cookie.length
+                    return unescape(document.cookie.substring(c_start,c_end))
+                } 
+            }
+            return ""
+        }
+        $("#btn-new-image").click(function(){
+                alert($("#new-image-desc").val() + $("#new-image-url").val());
+                $.ajax({
+                    type: "post",
+                    url: "/manage/image",
+                    data:{action:"new", "_xsrf":  getCookie('_xsrf'), "desc":$("#new-image-desc").val(), "url":$("#new-image-url").val()},
+                    success: function(data, textStatus){
+                        alert(11);
+                    },
+                    error: function(){
+                        alert(22);
+                    }
+                });
+            });
+
+        $('a.preview').imgPreview();
+    </script>
+  </body>
+</html>
