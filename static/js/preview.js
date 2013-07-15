@@ -91,6 +91,9 @@
                         s.onLoad.call($img[0], link);
                     })
                     .attr( 'src' , addPrefix($(link).attr(s.srcAttr)) );
+
+                $img.css("width", "600px");
+                $img.css("border", "1px dashed #2ecc71");
                 s.onShow.call($container[0], link);
                 
             }, function(){

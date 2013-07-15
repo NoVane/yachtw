@@ -26,9 +26,11 @@ class Application(tornado.web.Application):
 
         handlers = [
             (r"/", handler.IndexHandler),
+            (r"/news", ),
             (r"/login", handler.LoginHandler),
             (r"/manage", handler.ManageHandler),
-            (r"/manage/image", handler.ManageImageHandler)
+            (r"/manage/image", handler.ManageImageHandler),
+            (r"/manage/news", handler.ManageNewsHandler)
         ]
 
         tornado.web.Application.__init__(self, handlers, **settings)

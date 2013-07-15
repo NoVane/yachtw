@@ -26,7 +26,7 @@
         <div class="navbar  navbar-fixed-top">
                 <div class="navbar-inner">
                     <div class="container-fluid">
-                        <img src="{{static_url("img/logo.png")}}" style="height:48px;display:inline-block;float:left"></img>
+                        <img src="{{static_url("img/logo.png")}}" style="height:48px;display:inline-block;float:left" />
                          <a data-target=".navbar-responsive-collapse" data-toggle="collapse" class="btn btn-navbar">
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -74,54 +74,58 @@
         <hr>
 
     	<div class="pagination">
-    		<ul>
-        		<li>
-    				<a href="#">首页</a>
-    			</li>
-    			<li>
-    				<a href="#">上一页</a>
-    			</li>
-    			<li>
-    				<a href="#">1</a>
-    			</li>
-    			<li>
-    				<a href="#">2</a>
-    			</li>
-    			<li>
-    				<a href="#">3</a>
-    			</li>
-    			<li>
-    				<a href="#">4</a>
-    			</li>
-    			<li>
-    				<a href="#">5</a>
-    			</li>
-    			<li>
-    				<a href="#">下一页</a>
-    			</li>
+            <ul>
+                <li>
+                    <a href="?p=1">首页</a>
+                </li>
+                {% if curr > 1 %}
+                <li>
+                    <a href="?p={{ curr -  1 }}">上一页</a>
+                </li>  
+                {% else %}
+                 <li class="disabled">
+                    <a href="#">上一页</a>
+                </li> 
+                {% end %}
+                {% for p in pagination %}
                 
-        		<li>
-    				<a href="#">尾页</a>
-    			</li>
+                <li class="{{ escape(p["class"]) }}">
+                    <a href="?p={{ p["number"] }}" >{{ p["number"] }}</a>
+                </li>
+                {% end %}
+
+                {% if curr < total %}
+                <li>
+                    <a href="?p={{ curr +  1 }}">下一页</a>
+                </li>  
+                {% else %}
+                 <li class="disabled">
+                    <a href="#">下一页</a>
+                </li> 
+                {% end %}
+                
+                <li class="disabled">
+                    <a href="?p={{ total }}">尾页</a>
+                </li>
                 <li>
                     <div class="input-append">
-                      <input  type="text" maxlength="6" style="ime-mode:disabled;width:36px" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
-                      <button class="btn" type="button">转到</button>
+                      <input type="text" maxlength="6" style="ime-mode:disabled;width:36px" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                      <button class="btn btn-goto" type="button">转到</button>
                     </div>
                  </li>
-    		</ul>
-    	</div>
+            </ul>
+        </div>
         
         <div class="box-container">
             <div class="clearfix">
                 {% for img in images %}
                 <div class="box" data-id="{{ img.get('iid') }}">
                     <div class="img-box">
-                        <a href="#">
+                        <a href="{{ escape(img.get('target')) }}">
                             <img src="{{ escape(img.get('url')) }}">
                         </a>
                     </div>
-                    <span class="img-desc"><a href="#">{{ escape(img.get('desc')) }}</a></span>
+                    <span class="img-desc"><a href="{{ escape(img.get('target')) }}">{{ escape(img.get('desc')) }}</a></span>
                 </div>
                 {% end %}
             </div>
@@ -131,37 +135,41 @@
         <div class="pagination">
             <ul>
                 <li>
-                    <a href="#">首页</a>
+                    <a href="?p=1">首页</a>
                 </li>
+                {% if curr > 1 %}
                 <li>
+                    <a href="?p={{ curr -  1 }}">上一页</a>
+                </li>  
+                {% else %}
+                 <li class="disabled">
                     <a href="#">上一页</a>
-                </li>
-                <li>
-                    <a href="#">1</a>
-                </li>
-                <li>
-                    <a href="#">2</a>
-                </li>
-                <li>
-                    <a href="#">3</a>
-                </li>
-                <li>
-                    <a href="#">4</a>
-                </li>
-                <li>
-                    <a href="#">5</a>
-                </li>
-                <li>
-                    <a href="#">下一页</a>
-                </li>
+                </li> 
+                {% end %}
+                {% for p in pagination %}
                 
+                <li class="{{ escape(p["class"]) }}">
+                    <a href="?p={{ p["number"] }}" >{{ p["number"] }}</a>
+                </li>
+                {% end %}
+
+                {% if curr < total %}
                 <li>
-                    <a href="#">尾页</a>
+                    <a href="?p={{ curr +  1 }}">下一页</a>
+                </li>  
+                {% else %}
+                 <li class="disabled">
+                    <a href="#">下一页</a>
+                </li> 
+                {% end %}
+                
+                <li class="disabled">
+                    <a href="?p={{ total }}">尾页</a>
                 </li>
                 <li>
                     <div class="input-append">
-                      <input id="appendedInputButton" type="text" maxlength="6" style="ime-mode:disabled;width:36px" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
-                      <button class="btn" type="button">转到</button>
+                      <input  type="text" maxlength="6" style="ime-mode:disabled;width:36px" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                      <button class="btn btn-goto" type="button">转到</button>
                     </div>
                  </li>
             </ul>
@@ -187,7 +195,7 @@
         body {
           padding-top: 60px;
           padding-bottom: 40px;
-          font:12px/14px 宋体;
+          font:14px/16px 黑体;
         }
 
         .container{
@@ -211,8 +219,10 @@
 
         .img-desc{
             display: inline-block;
+            white-space:pre-wrap;
+            word-wrap : break-word ;
             padding-left: 5px;
-            width:95%;
+            width:96%;
             
         }
         
@@ -248,7 +258,15 @@
     <script src="{{static_url("js/bootstrap.js")}}">
     </script>
     <script>
-
+        $(".btn-goto").click(function()
+        {
+            var p = $(this).parent().children("input").val();
+            p = parseInt(p);
+            if(p > 0)
+            {
+                self.location = "/?p=" + $(this).parent().children("input").val();
+            }
+        })
     </script>
   </body>
 </html>

@@ -28,11 +28,11 @@
     		<!--/span-->
     		<div class="span12">
     				<ul class="nav nav-tabs">
-    					<li class="active">
-    						<a href="#">图片管理</a>
-    					</li>
     					<li>
-    						<a href="/manage/news">新闻管理</a>
+    						<a href="/manage/image">图片管理</a>
+    					</li>
+    					<li class="active">
+    						<a href="#">新闻管理</a>
     					</li>
     					<li>
     						<a href="#">联系管理</a>
@@ -42,46 +42,37 @@
                         
                         <div>
                             <div style="display:inline-block">
-                                <span> 图片描述: </span>
-                                <input id="new-image-desc" type="text" style="margin-right:10px;width:300px" />
-                            </div>
-                            <div style="display:inline-block">
-                                <span>图片地址:</span> 
-                                <input  id="new-image-url" type="text" style="margin-right:10px;width:400px" />
+                                <span> 新闻描述: </span>
+                                <input id="new-news-desc" type="text" style="margin-right:10px;width:750px" />
                             </div>
                             <div style="display:inline-block">
                                 <span>链接地址:</span> 
-                                <input  id="new-image-target" type="text" style="margin-right:10px;width:400px" />
+                                <input  id="new-news-target" type="text" style="margin-right:10px;width:400px" />
                             </div>
-                            <a id="btn-new-image" class="btn" style="margin-top:-10px">新增</a>
+                            <a id="btn-new-news" class="btn" style="margin-top:-10px">新增</a>
                         </div>
                         <hr>
         				<table class="table" >
                             <thead>
-                                <th width="30%" >图片描述</th>
-                                <th width="30%">图片地址</th>
+                                <th width="60%" >新闻描述</th>
                                 <th width="30%">链接地址</th>
                                 <th width="10%">操作</th>
                             </thead>    
         					<tbody>
-                                {% for img in images %}
-        						<tr data-id="{{ img.get('iid', -1)  }}">
+                                {% for new in news %}
+        						<tr data-id="{{ new.get('nid', -1)  }}">
         							<td class="info-desc">
-        								<span style="width:400px;display: inline-block;white-space:pre-wrap;word-wrap:break-word;">{{ escape(img.get('desc', '')) }}</span>
-                                        <input type="text" style="width:300px;display:none" value="{{ escape(img.get('desc', '')) }}" />
-        							</td>
-        							<td class="info-url" >
-        								<span  style="width:400px;display: inline-block;white-space:pre-wrap;word-wrap:break-word;"><a href="{{ escape(img.get('url', '')) }}" class="preview">{{ escape(img.get('url', '')) }}</a></span>
-                                        <input type="text" style="width:400px;display:none" value="{{ escape(img.get('url', '')) }}" />
+        								<span style="width:800px;display: inline-block;white-space:pre-wrap;word-wrap:break-word;">{{ escape(new.get('desc', '')) }}</span>
+                                        <input type="text" style="width:300px;display:none" value="{{ escape(new.get('desc', '')) }}" />
         							</td>
                                     <td class="info-target" >
-                                        <span  style="width:400px;display: inline-block;white-space:pre-wrap;word-wrap:break-word;"><a href="{{ escape(img.get('target', '')) }}" class="preview">{{ escape(img.get('target', '')) }}</a></span>
-                                        <input type="text" style="width:400px;display:none" value="{{ escape(img.get('target', '')) }}" />
+                                        <span  style="width:400px;display: inline-block;white-space:pre-wrap;word-wrap:break-word;"><a href="{{ escape(new.get('target', '')) }}">{{ escape(new.get('target', '')) }}</a></span>
+                                        <input type="text" style="width:400px;display:none" value="{{ escape(new.get('target', '')) }}" />
                                     </td>
         							<td class="operate-btn" >
-                                        <button class="btn btn-mini btn-info modify-image-btn" type="button">修改</button>
-                                        <button class="btn btn-mini btn-info save-image-btn" style="display:none" type="button">保存</button>
-                                        <button class="btn btn-mini btn-danger del-image-btn" type="button">删除</button>
+                                        <button class="btn btn-mini btn-info modify-news-btn" type="button">修改</button>
+                                        <button class="btn btn-mini btn-info save-news-btn" style="display:none" type="button">保存</button>
+                                        <button class="btn btn-mini btn-danger del-news-btn" type="button">删除</button>
         							</td>
         						</tr>
                                 {% end %}
@@ -123,8 +114,6 @@
     </script>
     <script src="{{static_url("js/bootstrap.js")}}">
     </script>
-    <script src="{{static_url("js/preview.js")}}">
-    </script>
     <script>
 
         function getCookie(c_name)
@@ -142,16 +131,14 @@
             }
             return ""
         }
-        $("#btn-new-image").click(function(){
-                //alert($("#new-image-desc").val() + $("#new-image-url").val());
+        $("#btn-new-news").click(function(){
                 $.ajax({
                     type: "post",
-                    url: "/manage/image",
+                    url: "/manage/news",
                     data:{  "action":"new", 
                             "_xsrf":  getCookie('_xsrf'), 
-                            "desc":$("#new-image-desc").val(), 
-                            "url":$("#new-image-url").val(), 
-                            "target":$("#new-image-target").val() },
+                            "desc":$("#new-news-desc").val(), 
+                            "target":$("#new-news-target").val() },
                     success: function(data, textStatus){
                         window.location.reload();
                     },
@@ -161,7 +148,7 @@
                 });
             });
 
-        $(".del-image-btn").click(function(){
+        $(".del-news-btn").click(function(){
             var data = $(this).parent().parent().data();
 
             var r=confirm("确认删除吗？");
@@ -169,8 +156,8 @@
             {
                 $.ajax({
                     type: "post",
-                    url: "/manage/image",
-                    data:{action:"delete", "_xsrf":  getCookie('_xsrf'), "iid":data.id},
+                    url: "/manage/news",
+                    data:{action:"delete", "_xsrf":  getCookie('_xsrf'), "nid":data.id},
                     success: function(data, textStatus){
                         window.location.reload();
                     },
@@ -190,27 +177,26 @@
         });
 
 
-        $(".modify-image-btn").click(function(){
+        $(".modify-news-btn").click(function(){
 
             $(this).parent().parent().children("td").children("span").hide();
             $(this).parent().parent().children("td").children("input").show();
-            $(this).parent().parent().children("td").children(".modify-image-btn").hide();
-            $(this).parent().parent().children("td").children(".save-image-btn").show();
+            $(this).parent().parent().children("td").children(".modify-news-btn").hide();
+            $(this).parent().parent().children("td").children(".save-news-btn").show();
             
         });
 
-        $(".save-image-btn").click(function(){
+        $(".save-news-btn").click(function(){
 
             var data = $(this).parent().parent().data();
             var tr = $(this).parent().parent();
             $.ajax({
                     type: "post",
-                    url: "/manage/image",
+                    url: "/manage/news",
                     data:{  action:"update", 
                             "_xsrf":  getCookie('_xsrf'), 
-                            "iid":data.id,
+                            "nid":data.id,
                             "desc":tr.children(".info-desc").children("input").val(), 
-                            "url":tr.children(".info-url").children("input").val(), 
                             "target":tr.children(".info-target").children("input").val() },
                     success: function(data, textStatus){
                         window.location.reload();
@@ -224,7 +210,6 @@
             
         });
 
-        $('a.preview').imgPreview();
     </script>
   </body>
 </html>
