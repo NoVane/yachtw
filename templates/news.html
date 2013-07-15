@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <title>
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <link href="{{static_url("css/bootstrap.css")}}" rel="stylesheet">
+
+    <link href="{{static_url("css/bootstrap-responsive.css")}}" rel="stylesheet">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+    <!-- Le fav and touch icons -->
+    
+  </head>
+  <body>
+
+    <div class="container-fluid">
+        <div class="navbar  navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container-fluid">
+                        <img src="{{static_url("img/logo.png")}}" style="height:48px;display:inline-block;float:left" />
+                         <a data-target=".navbar-responsive-collapse" data-toggle="collapse" class="btn btn-navbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a> 
+                        <a href="#" class="brand">
+                            <strong style="font-family:微软雅黑;color:#EEE">游艇展销网</strong>
+                        </a>
+                        <div class="nav-collapse collapse navbar-responsive-collapse">
+                            <ul class="nav">
+                                <li >
+                                    <a href="#">首页</a>
+                                </li>
+                                <li>
+                                    <a href="#">产品</a>
+                                </li>
+                                <li class="active">
+                                    <a href="#">新闻</a>
+                                </li>
+                                <li>
+                                    <a href="#">联系我们</a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+
+        <div class="logo">
+            <!--
+            <img src="assets/img/logo.jpg" style="height:72px"></img>
+            
+            <form class="form-search pull-right">
+                <div class="input-append">
+                    <input type="text" class="span2 search-query">
+                    <button type="submit" class="btn">Search</button>
+                </div>
+            </form>
+            -->
+        </div>
+            
+        
+        <hr>
+
+        <div class="box-container">
+            <div class="clearfix">
+                {% for new in news %}
+                <div class="box" data-id="{{ new.get('iid') }}">
+					<a href="{{new.get('target')}}">{{escape(new.get('desc'))}}</a>
+                </div>
+                {% end %}
+            </div>
+        </div>
+      
+        <hr>
+        <footer class="text-center muted">免责申明: 本网站内容收集于互联网，如有侵害到您权利的请<a href="mailto:a@b.com">联系我们</a>，我们会立即处理。</footer>
+    </div>
+
+    <style>
+        a:link {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:visited {
+            color: #1abc9c;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #d35400;
+            text-decoration: none;
+        }
+
+        body {
+          padding-top: 60px;
+          padding-bottom: 40px;
+          font:14px/16px 黑体;
+        }
+
+        .box{
+            border-bottom:1px solid #EEE;
+			border-top:1px solid #fff;
+			padding:10px
+        }
+
+        
+      
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+    </script>
+    <script src="{{static_url("js/bootstrap.js")}}">
+    </script>
+    <script>
+    </script>
+  </body>
+</html>

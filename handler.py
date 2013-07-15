@@ -106,7 +106,8 @@ class IndexHandler(BaseHandler):
 
 class NewsHandler(BaseHandler):
     def get(self):
-        self.render("news.html")
+        news = self.application.db.query_news_items()
+        self.render("news.html", news=news)
 class ManageHandler(BaseHandler):
     _json_encoder = json.JSONEncoder()
     @tornado.web.authenticated
