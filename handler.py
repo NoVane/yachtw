@@ -38,9 +38,8 @@ class LoginHandler(BaseHandler):
         self.redirect("/manage")
 
     def do_login(self, u, p):
-        secure_password_md5 = hashlib.md5(p + self._salt).hexdigest()
-        print secure_password_md5
-        return True
+        sp = hashlib.md5(p + self._salt).hexdigest()
+        return self.application.db.check_password(u, sp)
 
 class IndexHandler(BaseHandler):
     def get(self):

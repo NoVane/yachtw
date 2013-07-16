@@ -103,3 +103,14 @@ class BaseDB(object):
 
         return c.fetchall()
 
+
+    def check_password(self, u, p):
+        c = self._conn.cursor()
+        c.execute(u'SELECT passwd FROM user where name=?', [u])
+        x = c.fetchone()
+        try:
+            if x.get('passwd') == p:
+                return True
+        except:
+            return False
+        return False
