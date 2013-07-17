@@ -30,7 +30,8 @@ class Application(tornado.web.Application):
             (r"/login", handler.LoginHandler),
             (r"/manage", handler.ManageHandler),
             (r"/manage/image", handler.ManageImageHandler),
-            (r"/manage/news", handler.ManageNewsHandler)
+            (r"/manage/news", handler.ManageNewsHandler),
+            (r"/manage/system", handler.ManageSystemHandler)
         ]
 
         tornado.web.Application.__init__(self, handlers, **settings)
@@ -42,8 +43,9 @@ def main():
     tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(Application())
     http_server.listen(options.port)
+    print 'start server on', options.port
     tornado.ioloop.IOLoop.instance().start()
-    print 'start server...'
+
 
 if __name__ == "__main__":
     main()

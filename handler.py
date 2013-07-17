@@ -2,6 +2,7 @@
 import hashlib
 import json
 import tornado.web
+from tornado.web import asynchronous
 from setting import *
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -206,4 +207,18 @@ class ManageNewsHandler(ManageHandler):
     def _query(self):
         rows = self.application.db.query_news_items()
         return rows
+
+
+
+class ManageSystemHandler(ManageHandler):
+    @tornado.web.authenticated
+    def get(self):
+        self.render("manage/system.html")
+
+
+    def post(self):
+        action = self.get_argument("action", "")
+        if action == "change_passwd":
+            print self.get_argument("old_passwd"), self.get_argument("new_passwd"), self.get_argument("new_passwd_confirm")
+        self.write("aaaaaaaaaaaa")
 
