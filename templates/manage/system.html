@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="zh-CN">
+    <title>
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <link href="{{static_url("css/bootstrap.css")}}" rel="stylesheet">
+    <style>
+      body { padding-top: 60px; /* 60px to make the container go all the way
+      to the bottom of the topbar */ }
+    </style>
+    <link href="{{static_url("css/bootstrap-responsive.css")}}" rel="stylesheet">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <div class="container-fluid">
+    	<div class="row-fluid">
+    		<!--/span-->
+    		<div class="span12">
+    				<ul class="nav nav-tabs">
+    					<li>
+    						<a href="/manage/image">图片管理</a>
+    					</li>
+    					<li >
+    						<a href="/manage/news">新闻管理</a>
+    					</li>
+    					<li class="active">
+    						<a href="#">系统管理</a>
+    					</li>
+    				</ul>
+        	    	<div class="well">
+                        <h3>修改管理员密码</h3>
+                            <div>
+                              <div class="clearfix">
+                                <input type="text" id="old_passwd" placeholder="原密码">
+                              </div>
+                              <div class="clearfix">
+                                <input type="password" id="new_passwd" placeholder="新密码">
+                              </div>
+                              <div class="clearfix">
+                                <input type="password" id="new_passwd_confirm" placeholder="新密码确认">
+                              </div>
+                              <button id="btn_change_passwd" class="btn primary">修改</button>
+                        </div>
+    			    </div>
+    			<!--/span-->
+    		</div>
+    	</div>
+    	<!--/row-->
+    	
+    	<footer>
+    		
+    	</footer>
+    </div>
+    <!--/.fluid-container-->
+
+    <style>
+      
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+      
+      @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+      
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+    </script>
+    <script src="{{static_url("js/bootstrap.js")}}">
+    </script>
+    <script>
+
+        function getCookie(c_name)
+        {
+            if (document.cookie.length>0)
+            {
+                c_start=document.cookie.indexOf(c_name + "=")
+                if (c_start!=-1)
+                { 
+                    c_start=c_start + c_name.length+1 
+                    c_end=document.cookie.indexOf(";",c_start)
+                    if (c_end==-1) c_end=document.cookie.length
+                    return unescape(document.cookie.substring(c_start,c_end))
+                } 
+            }
+            return ""
+        }
+
+        $("#btn_change_passwd").click(function()
+        {
+            alert(3);
+            $.post("/manage/system", 
+                    {
+                        "_xsrf":  getCookie('_xsrf'),
+                        "action": "change_passwd",
+                        "old_passwd":$("#old_passwd").val(),
+                        "new_passwd":$("#new_passwd").val(),
+                        "new_passwd_confirm":$("#new_passwd_confirm").val(),
+                    },
+                    function(d)
+                    {
+                        alert("Data Loaded: " + d);
+                    });
+        });
+
+    </script>
+  </body>
+</html>
